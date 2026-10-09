@@ -64,10 +64,13 @@ test('test url', () => {
   expect(llvm.distributionUrl('18.1.3', 'darwin')).toStrictEqual(
     'https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-18.1.3/LLVM-ET-Arm-18.1.3-Darwin-universal.dmg'
   );
+  expect(llvm.distributionUrl('23.1.0', 'linux')).toStrictEqual(
+    'https://github.com/arm/arm-toolchain/releases/download/release-23.1.0-ATfE/ATfE-23.1.0-Linux-x86_64.tar.xz'
+  );
 });
 
 test('latest points to a known latest release', async () => {
-  const knownLatestRelease = '19.1.1';
+  const knownLatestRelease = '23.1.0';
 
   const latestRelease = llvm.latestVersion();
 

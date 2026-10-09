@@ -4,6 +4,12 @@ import semver from 'semver';
 import fetch from 'node-fetch';
 
 const versions: {[llvmRelease: string]: string[]} = {
+  '23.1.0': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
+  '22.1.0': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
+  '21.1.1': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
+  '21.1.0': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
+  '20.1.0': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
+  '19.1.5': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
   '19.1.1': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
   '18.1.3': ['Darwin-universal', 'Windows-x86_64', 'Linux-x86_64'],
   '17.0.1': ['Darwin', 'Windows-x86_64', 'Linux-x86_64'],
@@ -31,7 +37,10 @@ export function hasDarwin(llvmRelease: string): boolean {
 }
 
 export function distributionUrl(version: string, platform: string): string {
-  const baseUrl = 'https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/';
+  // From 20.x onwards the toolchain is released as "Arm Toolchain for Embedded" (ATfE) in the arm/arm-toolchain repo
+  const baseUrl = semver.satisfies(version, '>=20.0.0')
+    ? 'https://github.com/arm/arm-toolchain/releases/download/'
+    : 'https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/';
 
   // Convert the node platform value to the versions URL keys
   let osName = '';
@@ -83,8 +92,10 @@ export function distributionUrl(version: string, platform: string): string {
   let filename: string;
   if (semver.satisfies(version, '<=17.0.1')) {
     filename = `release-${version}/LLVMEmbeddedToolchainForArm-${version}-${osName}.${ext}`;
-  } else {
+  } else if (semver.satisfies(version, '<20.0.0')) {
     filename = `release-${version}/LLVM-ET-Arm-${version}-${osName}.${ext}`;
+  } else {
+    filename = `release-${version}-ATfE/ATfE-${version}-${osName}.${ext}`;
   }
 
   return baseUrl + filename;

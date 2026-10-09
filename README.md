@@ -35,6 +35,12 @@ section.
 ## Available releases
 
 - `latest` <-- Always points to the latest release
+- `23.1.0` (macOS, Windows, Linux)
+- `22.1.0` (macOS, Windows, Linux)
+- `21.1.1` (macOS, Windows, Linux)
+- `21.1.0` (macOS, Windows, Linux)
+- `20.1.0` (macOS, Windows, Linux)
+- `19.1.5` (macOS, Windows, Linux)
 - `19.1.1` (macOS, Windows, Linux)
 - `18.1.3` (macOS, Windows, Linux)
 - `17.0.1` (macOS, Windows, Linux)
